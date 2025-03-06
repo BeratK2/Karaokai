@@ -80,18 +80,6 @@ def dataset_preprocess(dir_path):
                     D = np.abs(librosa.stft(y))**2
                     S_instrumental = librosa.feature.melspectrogram(S=D, sr=sr)
 
-                    # --- Display mel spectrogram --- 
-                    librosa.display.specshow(librosa.amplitude_to_db(S_instrumental, ref=np.max),
-                         sr=sr, x_axis='time', y_axis='log')
-                    plt.colorbar(label='dB')
-                    plt.title("Magnitude Spectrogram")
-                    plt.show()
-
-                    # --- Add spectrogram to dataframe --- 
-                    new_row = {'label': 'instrumental', 'spectrogram': S_instrumental}
-                    df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-
-
                     instrumentals = True
         log_file.close()
         
