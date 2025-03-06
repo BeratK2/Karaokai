@@ -80,6 +80,11 @@ def dataset_preprocess(dir_path):
                     D = np.abs(librosa.stft(y))**2
                     S_instrumental = librosa.feature.melspectrogram(S=D, sr=sr)
 
+                    # --- Add spectrogram to dataframe --- 
+                    new_row = {'label': 'instrumental', 'spectrogram': S_instrumental}
+                    df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+
+
                     instrumentals = True
         log_file.close()
         
