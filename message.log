@@ -1,43 +1,12 @@
-Nested Path ==>  ./Wavfiles/Cristina Vane - So Easy
-Inside ==> bass.wav
-Inside bass,drums,other bass.wav
-Instrumentals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Cristina Vane - So Easy\bass.wav
-Inside ==> drums.wav
-Inside bass,drums,other drums.wav
-Instrumentals ==> (array([-5.0345938e-05, -1.8266086e-05,  1.1753077e-05, ...,
-        0.0000000e+00,  0.0000000e+00,  0.0000000e+00], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Cristina Vane - So Easy\drums.wav
-Inside ==> mixture.wav
-Inside bass,drums,other mixture.wav
-Instrumentals ==> (array([-4.2456009e-05, -2.8028257e-05, -7.6697324e-06, ...,
-       -3.1990177e-05, -2.8759187e-05, -3.3124867e-05], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Cristina Vane - So Easy\mixture.wav
-Inside ==> other.wav
-Inside bass,drums,other other.wav
-Instrumentals ==> (array([ 7.1939476e-06, -8.1981834e-06, -3.2270389e-05, ...,
-       -3.1990177e-05, -2.8759187e-05, -3.3124867e-05], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Cristina Vane - So Easy\other.wav
-Inside ==> vocals.wav
-Vocals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Cristina Vane - So Easy\vocals.wav
 Nested Path ==>  ./Wavfiles/Triviul feat. The Fiend - Widow
-Inside ==> bass.wav
-Inside bass,drums,other bass.wav
-Instrumentals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Triviul feat. The Fiend - Widow\bass.wav
 Inside ==> drums.wav
-Inside bass,drums,other drums.wav
-Instrumentals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Triviul feat. The Fiend - Widow\drums.wav
-Inside ==> mixture.wav
-Inside bass,drums,other mixture.wav
-Instrumentals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Triviul feat. The Fiend - Widow\mixture.wav
-Inside ==> other.wav
-Inside bass,drums,other other.wav
-Instrumentals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Triviul feat. The Fiend - Widow\other.wav
 Inside ==> vocals.wav
-Vocals ==> (array([0., 0., 0., ..., 0., 0., 0.], dtype=float32), 22050)
-File Path ==> ./Wavfiles\Triviul feat. The Fiend - Widow\vocals.wav
+Inside ==> other.wav
+Inside ==> mixture.wav
+Inside ==> bass.wav
+Nested Path ==>  ./Wavfiles/Cristina Vane - So Easy
+Inside ==> drums.wav
+Inside ==> vocals.wav
+Inside ==> other.wav
+Inside ==> mixture.wav
+Inside ==> bass.wav
