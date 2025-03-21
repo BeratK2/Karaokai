@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pydub import AudioSegment
 
-folder_path = "./Wavfiles"
+folder_path = "./test"
 
 # --- Connfigure ffmpeg ---
 ffmpeg_path = "/opt/homebrew/bin/ffmpeg"  # Or check using `which ffmpeg`
