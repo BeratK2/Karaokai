@@ -17,7 +17,7 @@ def index():
 # --- Separate instruments and vocals ---
 @app.route('/separate', methods=['POST', 'GET'])
 def run_separate():
-    os.chdir("./separation")
+    os.chdir(os.getcwd() + "/separation")
 
     # --- Remove files from song_input and separation folder --- 
     for f in os.listdir("./song_input"):
@@ -62,6 +62,8 @@ def run_separate():
     output_folder = os.path.join("./separation/separated/htdemucs" + "/" + file_name)
     separated_files = os.listdir(output_folder)
 
+    print(os.getcwd())
+
     # --- Generate HTML Response with Download Buttons ---
     return render_template_string('''
         <html>
@@ -83,6 +85,8 @@ def run_separate():
         </body>
         </html>
     ''', filename=file_name, files=separated_files)
+
+
 
 @app.route('/download/<filename>/<folder>')
 def download_file(filename, folder):
