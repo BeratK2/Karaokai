@@ -87,6 +87,71 @@ def run_separate():
     ''', filename=file_name, files=separated_files)
 
 
+# --- Cancel the operation and reset ---
+@app.route('/cancel', methods=['POST'])
+def cancel_operation():
+    # Import the module and modify it directly
+    from separation import separate
+    
+    # Since 'cancel_separation' doesn't exist yet, we need to add it
+    # First, check if a process is running
+    if hasattr(separate, 'current_process') and separate.current_process is not None:
+        try:
+            # Terminate the process
+            separate.current_process.terminate()
+            
+            # Give it a moment to terminate gracefully
+            import time
+            time.sleep(0.5)
+            
+            # If it's still running, force kill it
+            if separate.current_process.poll() is None:
+                if os.name == 'nt':  # Windows
+                    subprocess.run(['taskkill', '/F', '/T', '/PID', str(separate.current_process.pid)])
+                else:  # Unix-like
+                    import signal
+                    os.kill(separate.current_process.pid, signal.SIGKILL)
+            
+            # Reset the current process
+            separate.current_process = None
+            canceled = True
+            
+        except Exception as e:
+            print(f"Error canceling process: {e}")
+            canceled = False
+    else:
+        print("No separation process is currently running")
+        canceled = False
+    
+    # Clear song_input and separation folders
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    input_dir = os.path.join(base_dir, "separation", "song_input")
+    separation_dir = os.path.join(base_dir, "separation", "separated", "htdemucs")
+    
+    # Clean up input directory
+    for f in os.listdir(input_dir):
+        file_path = os.path.join(input_dir, f)
+        try:
+            os.chmod(file_path, stat.S_IWRITE)
+            os.remove(file_path)
+        except Exception as e:
+            print(f"Error removing {file_path}: {e}")
+    
+    # Clean up separation directory
+    for f in os.listdir(separation_dir):
+        file_path = os.path.join(separation_dir, f)
+        try:
+            os.chmod(file_path, stat.S_IWRITE)
+            shutil.rmtree(file_path)
+        except Exception as e:
+            print(f"Error removing {file_path}: {e}")
+    
+    # Return a JSON response for better AJAX handling
+    if canceled:
+        return jsonify({"status": "success", "message": "Operation canceled successfully"})
+    else:
+        return jsonify({"status": "info", "message": "No operation to cancel"})
+
 
 @app.route('/download/<filename>/<folder>')
 def download_file(filename, folder):

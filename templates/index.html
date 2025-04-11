@@ -33,23 +33,21 @@
     <div>
         <div class="container text-center mt-5">
             <h1 class="display-6">Welcome to Karaokai</h1>
-            <form action="/separate" method="POST" enctype="multipart/form-data">
+            <form action="/separate" method="POST" enctype="multipart/form-data" id="upload-form">
                 <div id="drop-area" class="drop-zone">
                     <p>Drag & drop an mp3 or wav file here or <strong>click to browse</strong></p>
                     <input type="file" id="file" name="file" class="form-control" required>
                     <p id="file-name" class="text-muted"></p>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Upload</button>
+                <button type="submit" id="upload-button" class="btn btn-primary mt-3">Upload</button>
             </form>
-            <!-- Button to trigger POST request -->
-            <button id="runButton" class="mt-3 btn btn-primary">Click me to run function</button>
             <p id="responseMessage" class="mt-3"></p> <!-- Area to show response message -->
         </div>
     </div>
 
 
-       <!-- JavaScript for Drag and Drop -->
-       <script>
+    <!-- JavaScript for Drag and Drop -->
+    <script>
         const dropArea = document.getElementById("drop-area");
         const fileInput = document.getElementById("file");
         const fileNameDisplay = document.getElementById("file-name");
@@ -114,30 +112,76 @@
             event.preventDefault();
             const formData = new FormData();
             const fileInput = document.getElementById("file");
+            const uploadButton = document.getElementById("upload-button");
 
             if (fileInput.files.length === 0) {
-                document.getElementById("status").textContent = "Please select a file.";
+                document.getElementById("responseMessage").textContent = "Please select a file.";
                 return;
             }
 
+            // Change button to red Cancel button
+            uploadButton.textContent = "Cancel";
+            uploadButton.classList.remove("btn-primary");
+            uploadButton.classList.add("btn-danger");
+
+            // Change form submission behavior to cancel operation
+            uploadButton.onclick = function (e) {
+                e.preventDefault();
+                cancelOperation();
+                return false;
+            };
+
             formData.append("file", fileInput.files[0]);
 
-            document.getElementById("status").textContent = "Uploading & Cleaning...";
+            document.getElementById("responseMessage").textContent = "Separating your music...";
 
             const response = await fetch("/separate", {
                 method: "POST",
                 body: formData
             });
 
-            const result = await response.text();
-            document.getElementById("status").textContent = result;
+            if (response.ok) {
+                // Replace the entire document with the response HTML
+                document.open();
+                document.write(await response.text());
+                document.close();
+            } else {
+                const errorText = await response.text();
+                document.getElementById("responseMessage").textContent = "Error: " + errorText;
+
+                // Reset the button
+                resetButton();
+            }
         });
+
+        function cancelOperation() {
+            fetch("/cancel", {
+                method: "POST",
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById("responseMessage").textContent = "Operation cancelled.";
+                    resetButton();
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                document.getElementById("responseMessage").textContent = "Error cancelling operation.";
+            });
+        }
+
+        function resetButton() {
+            const uploadButton = document.getElementById("upload-button");
+            uploadButton.textContent = "Upload";
+            uploadButton.classList.remove("btn-danger");
+            uploadButton.classList.add("btn-primary");
+
+            // Reset onclick to default form submission behavior
+            uploadButton.onclick = null;
+        }
     </script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous">
-    </script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
 
 
     <!-- JavaScript (AJAX request) -->
